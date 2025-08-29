@@ -2,46 +2,126 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Para minha amiga</title>
   <style>
     body {
       background-color: #ffe6f0;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Georgia', serif;
       color: #333;
-      text-align: center;
-      padding: 40px;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     .carta {
       background-color: #fff;
+      border: 2px solid #e91e63;
       border-radius: 20px;
-      padding: 30px;
-      max-width: 600px;
-      margin: auto;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      max-width: 650px;
+      width: 100%;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 2s ease-in-out;
     }
 
     h1 {
       color: #e91e63;
+      font-family: 'Brush Script MT', cursive;
+      font-size: 34px;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
     p {
-      font-size: 18px;
-      line-height: 1.6;
+      font-size: 16px;
+      line-height: 1.7;
       text-align: justify;
     }
 
-    audio {
-      margin-bottom: 30px;
+    /* Animação */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Botão player */
+    #player-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #e91e63;
+      border: none;
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      font-size: 20px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(233, 30, 99, 0.6);
+      transition: 0.3s;
+      z-index: 1000;
+    }
+
+    #player-btn:hover {
+      background: #c2185b;
+      box-shadow: 0 0 20px rgba(233, 30, 99, 0.9);
+    }
+
+    /* Coraçãozinho piscando */
+    .coracao {
+      font-size: 26px;
+      color: #e91e63;
+      animation: pulse 1.5s infinite;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.7; }
+    }
+
+    /* Ajustes para telas menores */
+    @media (max-width: 600px) {
+      body {
+        padding: 25px;
+        justify-content: flex-start; /* melhor leitura em celulares */
+      }
+      h1 {
+        font-size: 26px;
+      }
+      p {
+        font-size: 15px;
+      }
+      .carta {
+        padding: 15px;
+      }
+      #player-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Player de música com controles e repetição -->
-  <audio controls loop>
-    <source src="https://chatfiles.openai.com/carta_amiga.mp3" type="audio/mpeg">
+  <div class="coracao">❤️</div>
+
+  <!-- Música -->
+  <audio id="musica" loop autoplay muted>
+    <source src="MÚSICA/ytmp3free.cc_sergio-lopes-o-amigo-com-letra-youtubemp3free.org.mp3" type="audio/mpeg">
   </audio>
+
+  <!-- Botão Play/Pause -->
+  <button id="player-btn">▶</button>
 
   <div class="carta">
     <h1>Para você, minha amiga especial</h1>
@@ -61,12 +141,32 @@
       O intuito desta carta é que você saiba o quanto é especial. Gosto muito de ver seus vídeos ensinando as crianças, fazendo o que ama. Gosto de ouvir suas histórias, das suas "pequenas" atitudes — que parecem passar despercebidas, mas que me fazem valorizar ainda mais nossa amizade.
     </p>
     <p>
- Eu não entendo nada de cabelo, mas gosto quando você fala e posta foto dele. Gosto da sua alegria contagiante, do seu sorriso, da sua voz, das músicas que você canta... Enfim, amo sua amizade. Essas palavras são do fundo do meu coração, e espero que tenha lido tudo.
+      Eu não entendo nada de cabelo, mas gosto quando você fala e posta foto dele. Gosto da sua alegria contagiante, do seu sorriso, da sua voz, das músicas que você canta... Enfim, amo sua amizade. Essas palavras são do fundo do meu coração, e espero que tenha lido tudo.
     </p>
     <p>
- Carl Sagan disse: "Diante da vastidão do tempo e da imensidão do universo, é um imenso prazer para mim dividir um planeta e uma época com você." Sua amizade é um presente de Deus!
+      Carl Sagan disse: "Diante da vastidão do tempo e da imensidão do universo, é um imenso prazer para mim dividir um planeta e uma época com você." Sua amizade é um presente de Deus!
     </p>
   </div>
 
+  <script>
+    const audio = document.getElementById("musica");
+    const btn = document.getElementById("player-btn");
+    let liberado = false;
+
+    btn.addEventListener("click", () => {
+      if (!liberado) {
+        audio.muted = false;
+        liberado = true;
+      }
+
+      if (audio.paused) {
+        audio.play();
+        btn.textContent = "⏸";
+      } else {
+        audio.pause();
+        btn.textContent = "▶";
+      }
+    });
+  </script>
 </body>
 </html>
